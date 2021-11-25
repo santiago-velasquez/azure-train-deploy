@@ -3,11 +3,15 @@
 _Aplicación final Cloud - Especialización Analítica UdeA - Semestre 2 / 2021_
 
 **Santiago Velásquez**
+
 1036647710
+
 _santiago.velasquez4@udea.edu.co_
 
 **Carolina González Marín**
+
 1017251647
+
 _carolina.gonzalezm1@udea.edu.co_
 
 ## Comenzando 🚀
@@ -18,9 +22,22 @@ _Estas instrucciones/informe muestran cómo llevar de 0 a 1 la configuración, e
 ### Configuración 📋
 
 1. Tener una cuenta activa de Azure. Se puede realizar a través del [Azure Portal](www.portal.azure.com)
-2. Crear un Grupo Recursos
+
+2. Instalar lo necesario utilizando el archivo _.azureml/env-ml-esp.yml_. Si se está utilizando conda como el administrador de ambientes virtuales
+...
+ conda env create -f .azureml/env-ml-esp.yml
+ conda activate env-ml-esp.yml
+...
+
+3. Crear un Grupo Recursos. Se puede acceder al ícono de _Grupo de Recursos_ y posteriormente darle en _Crear_, arriba a la izquierda. Proveer la configuración y nombre necesaria.
 ![ScreenShot](readme_utils/gr.PNG)
-3. 
+
+4. Es hora de aprovisionar un recurso dentro del grupo de recursos. En este contexto de entrenar modelos de ML necesitaremos _Azure Machine Learning._ Puede hacerse de dos maneras.
+* Manualmente aprovisionando el recurso. Dentro del Grupo de Recursos creado ir al botón _Crear_, buscar "Azure Machine Learning" y crear el recurso. (Cerciorarse de crear un nuevo _Registro de Contenedor_, esto aparece en las opciones de creación de Azure ML.)
+![ScreenShot](readme_utils/azure_ml.PNG)
+* Utilizar el archivo _create-workspace.py_. Se deben proveer algunos detalles de suscripción, grupo recursos y nombre del recurso para Azure ML.
+
+5. 
 
 ```
 Da un ejemplo
