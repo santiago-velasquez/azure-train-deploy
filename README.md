@@ -14,7 +14,7 @@ _santiago.velasquez4@udea.edu.co_
 
 _carolina.gonzalezm1@udea.edu.co_
 
-## Comenzando 🚀
+### Comenzando 🚀
 
 _Estas instrucciones/informe muestran cómo llevar de 0 a 1 la configuración, entrenamiento y despliegue de un modelo de machine learning en Azure._
 
@@ -26,8 +26,8 @@ _Estas instrucciones/informe muestran cómo llevar de 0 a 1 la configuración, e
 2. Instalar lo necesario utilizando el archivo _.azureml/env-ml-esp.yml_. Si se está utilizando conda como el administrador de ambientes virtuales
 
 ```
- conda env create -f .azureml/env-ml-esp.yml
- conda activate env-ml-esp.yml
+conda env create -f .azureml/env-ml-esp.yml
+conda activate env-ml-esp.yml
 ```
 
 3. Crear un Grupo Recursos. Se puede acceder al ícono de _Grupo de Recursos_ y posteriormente darle en _Crear_, arriba a la izquierda. Proveer la configuración y nombre necesaria.
