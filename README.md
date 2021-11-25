@@ -19,113 +19,66 @@ _carolina.gonzalezm1@udea.edu.co_
 _Estas instrucciones/informe muestran cómo llevar de 0 a 1 la configuración, entrenamiento y despliegue de un modelo de machine learning en Azure._
 
 
-### Configuración 📋
+### Configuración 🔧 
 
 1. Tener una cuenta activa de Azure. Se puede realizar a través del [Azure Portal](www.portal.azure.com)
 
 2. Instalar lo necesario utilizando el archivo _.azureml/env-ml-esp.yml_. Si se está utilizando conda como el administrador de ambientes virtuales
-...
+
+```
  conda env create -f .azureml/env-ml-esp.yml
  conda activate env-ml-esp.yml
-...
+```
 
 3. Crear un Grupo Recursos. Se puede acceder al ícono de _Grupo de Recursos_ y posteriormente darle en _Crear_, arriba a la izquierda. Proveer la configuración y nombre necesaria.
+
 ![ScreenShot](readme_utils/gr.PNG)
 
 4. Es hora de aprovisionar un recurso dentro del grupo de recursos. En este contexto de entrenar modelos de ML necesitaremos _Azure Machine Learning._ Puede hacerse de dos maneras.
+
 * Manualmente aprovisionando el recurso. Dentro del Grupo de Recursos creado ir al botón _Crear_, buscar "Azure Machine Learning" y crear el recurso. (Cerciorarse de crear un nuevo _Registro de Contenedor_, esto aparece en las opciones de creación de Azure ML.)
+
 ![ScreenShot](readme_utils/azure_ml.PNG)
+
 * Utilizar el archivo _create-workspace.py_. Se deben proveer algunos detalles de suscripción, grupo recursos y nombre del recurso para Azure ML.
 
-5. 
+5. Crear una instancia/clúster de ejecución. Se debe aprovisionar este recurso en el Grupo Recurso donde se está trabajando, de manera similar a como se aprovisiona de manera manual Azure ML.
 
-```
-Da un ejemplo
-```
+6. Validar que la configuración es correcta y que tenemos acceso al workspace de manera remota. El script _test-workspace.py_ realiza ese trabajo ejecutando _/src/test-remote.py/_. Se debe proveer un nombre de experimento y el clúster de ejecución con el que se quiere correr el experimento. Se puede comprobar las diferentes salidas de la ejecución de _test-remote_ en los logs.
 
-### Instalación 🔧
+![ScreenShot](readme_utils/sc4.PNG)
 
-_Una serie de ejemplos paso a paso que te dice lo que debes ejecutar para tener un entorno de desarrollo ejecutandose_
 
-_Dí cómo será ese paso_
+### Entrenamiento 📋
 
-```
-Da un ejemplo
-```
+1. Subir dataset al workspace con _upload-dataset.py_. Cargará lo que haya en la carpeta _/data_. En este caso hay un archivo depurado de datos asociados a readmisiones de pacientes diabéticos en los últimos 10 años en cierto hospital (tomado de Kaggle). Esto se subirá al _Almacén de Datos_ default del workspace (también conocido como blob storage)
 
-_Y repite_
+2. Para entrenar el modelo se puede utilizar _train-with-remote.py_. Este script ejecutará un experimento con el nombre y el clúster proporcionado, y una ruta hacia los datos. En este caso será el archivo subido previamente al almacén de datos. Este script ejecutará el archivo _/src/generate-model.py_. Este script crea un pipeline de preprocesamiento y entrena un modelo Random Forest para un problema de clasificación binaria para predecir si un paciente será readmitido nuevamente por diabetes en el futuro dadas ciertas características. Finalmente escribe el pipeline + modelo en un archivo _.pkl_. 
 
-```
-hasta finalizar
-```
+![ScreenShot](readme_utils/tra.PNG)
 
-_Finaliza con un ejemplo de cómo obtener datos del sistema o como usarlos para una pequeña demo_
+3. Al terminar de ejecutar el entrenamiento se puede descargar el archivo _rf1.pkl_ de la carpeta _outputs_ en el entorno de ejecución del experimento.
 
-## Ejecutando las pruebas ⚙️
 
-_Explica como ejecutar las pruebas automatizadas para este sistema_
+### Despliegue ⚙️
 
-### Analice las pruebas end-to-end 🔩
+1. Puede ubicar el modelo descargado en la carpeta _/models_ o modificar la ruta en _register-model.py_ donde tiene el modelo; también es necesario proveer el nombre que tendrá el modelo en Azure ML. En este caso es "model_diabetes". Ejecute este script.
 
-_Explica que verifican estas pruebas y por qué_
+2. Desplegar el modelo usando _deploy-model.py_. Este script utiliza otro script en el que se debe indicar cómo procesar el _request_ y qué es lo que va a devolver en la respuesta. En este caso ese script utiliza el archivo _repsonse.py_.
 
-```
-Da un ejemplo
-```
+3. Revise en Azure ML que el despliegue haya sido correcto y que el endpoint se encuentra _Saludable_. Puede revisar esto en las dalidas de ejecución del script o en el botón _Endpoints_ en Azure ML.
 
-### Y las pruebas de estilo de codificación ⌨️
+![ScreenShot](readme_utils/sc5.PNG)
 
-_Explica que verifican estas pruebas y por qué_
+4. Utilice el endpoint. En este caso es http://ecab8ca8-c9ac-461d-bdcf-3ebecd105871.eastus2.azurecontainer.io/score, también almacenado en _endpoint.txt_.
 
-```
-Da un ejemplo
-```
-
-## Despliegue 📦
-
-_Agrega notas adicionales sobre como hacer deploy_
-
-## Construido con 🛠️
-
-_Menciona las herramientas que utilizaste para crear tu proyecto_
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - El framework web usado
-* [Maven](https://maven.apache.org/) - Manejador de dependencias
-* [ROME](https://rometools.github.io/rome/) - Usado para generar RSS
-
-## Contribuyendo 🖇️
-
-Por favor lee el [CONTRIBUTING.md](https://gist.github.com/villanuevand/xxxxxx) para detalles de nuestro código de conducta, y el proceso para enviarnos pull requests.
-
-## Wiki 📖
-
-Puedes encontrar mucho más de cómo utilizar este proyecto en nuestra [Wiki](https://github.com/tu/proyecto/wiki)
-
-## Versionado 📌
-
-Usamos [SemVer](http://semver.org/) para el versionado. Para todas las versiones disponibles, mira los [tags en este repositorio](https://github.com/tu/proyecto/tags).
-
-## Autores ✒️
-
-_Menciona a todos aquellos que ayudaron a levantar el proyecto desde sus inicios_
-
-* **Andrés Villanueva** - *Trabajo Inicial* - [villanuevand](https://github.com/villanuevand)
-* **Fulanito Detal** - *Documentación* - [fulanitodetal](#fulanito-de-tal)
-
-También puedes mirar la lista de todos los [contribuyentes](https://github.com/your/project/contributors) quíenes han participado en este proyecto. 
-
-## Licencia 📄
-
-Este proyecto está bajo la Licencia (Tu Licencia) - mira el archivo [LICENSE.md](LICENSE.md) para detalles
-
-## Expresiones de Gratitud 🎁
-
-* Comenta a otros sobre este proyecto 📢
-* Invita una cerveza 🍺 o un café ☕ a alguien del equipo. 
-* Da las gracias públicamente 🤓.
-* etc.
+![ScreenShot](readme_utils/sc6.PNG)
 
 
 
----
-⌨️ con ❤️ por [Villanuevand](https://github.com/Villanuevand) 😊
+### Pruebas end-to-end 🔩
+
+Utilice el endpoint para hacer requests y probar el despliegue y el desempeño del modelo. Puede utilizar _Postman_ para esto de la siguiente manera
+
+
+![ScreenShot](readme_utils/sc7.PNG)
