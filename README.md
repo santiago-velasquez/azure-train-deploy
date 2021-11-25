@@ -19,7 +19,7 @@ _Estas instrucciones/informe muestran cómo llevar de 0 a 1 la configuración, e
 
 1. Tener una cuenta activa de Azure. Se puede realizar a través del [Azure Portal](www.portal.azure.com)
 2. Crear un Grupo Recursos
-![ScreenShot](https://raw.github.com/{santiago-velasquez}/azure-train-deploy/main/gr.png)
+![ScreenShot](readme_utils/gr.PNG)
 3. 
 
 ```
